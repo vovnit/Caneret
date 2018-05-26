@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 from app import app
 
 es = Elasticsearch({'host': 'localhost', 'port': 9200})
-hdfs = HDFileSystem('hdfs://localhost', 9000)
+hdfs = HDFileSystem('hdfs://localhost', 8999)
 
 @app.route('/')
 def index():
@@ -38,3 +38,5 @@ def uploaded_file(filename):
         return response
     # return send_from_directory(app.config['UPLOAD_FOLDER'],
     #                            filename, as_attachment=True)
+
+
