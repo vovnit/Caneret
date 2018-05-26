@@ -1,5 +1,5 @@
 import os
-from flask import render_template, request, send_from_directory, send_file
+from flask import render_template, request, send_from_directory, send_file, make_response
 from hdfs3 import HDFileSystem
 from werkzeug.utils import secure_filename
 from app import app
@@ -31,6 +31,10 @@ def upload_file():
 def uploaded_file(filename):
 
     with hdfs.open("/tmp/" + filename, replication=1) as music:
-        return music.read()
+        response = make_response(music.read())
+        response.headers.set('Content-Type', 'audio/mpeg')
+        response.headers.set('Content-Disposition', 'attachment', filename='%s' % filename)
+        response.headers.set('Accept-Ranges', 'bytes')
+        return response
     # return send_from_directory(app.config['UPLOAD_FOLDER'],
     #                            filename, as_attachment=True)
