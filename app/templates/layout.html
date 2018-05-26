@@ -51,9 +51,9 @@
     <nav class="mdl-navigation">
         <a class="mdl-navigation__link" href="{{ url_for('upload_file') }}">Add your song</a>
         <a class="mdl-navigation__link" href="{{ url_for('index') }}">Main page</a>
-        <a class="mdl-navigation__link" href="">My music</a>
-        <a class="mdl-navigation__link" href="">Recently</a>
-        <a class="mdl-navigation__link" href="">Best</a>
+        <a class="mdl-navigation__link" href="{{ url_for('music') }}">My music</a>
+        <a class="mdl-navigation__link" href="javascript:alert('not implemented')">Recently</a>
+        <a class="mdl-navigation__link" href="javascript:alert('not implemented')">Best</a>
     </nav>
       <div>
           {% if filename %}

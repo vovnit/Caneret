@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block content %}
+    {%  if  music %}
+        {% for track in music %}
+            <div align="center">
+                <h6>Song : {{ track }}</h6>
+                <div class="hero-unit">
+                    <audio class="audio" controls>
+                        <source src="/uploads/{{ track }}" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+        {% endfor %}
+    {%  endif %}
+{% endblock %}
