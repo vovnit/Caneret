@@ -1,8 +1,11 @@
 import os
-from flask import render_template, request, send_from_directory
+from flask import render_template, request, send_from_directory, send_file
+from hdfs3 import HDFileSystem
 from werkzeug.utils import secure_filename
 from app import app
 
+
+hdfs = HDFileSystem('localhost', 9000)
 
 @app.route('/')
 def index():
@@ -11,17 +14,23 @@ def index():
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
+    os.environ["HADOOP_CONF_DIR"] = "/home/vovnit/Soft/hadoop-3.1.0/etc/hadoop"
     if request.method == 'POST':
         file = request.files['file']
         if file.filename:
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            print(app.config['UPLOAD_FOLDER'])
+            path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(path)
+            hdfs.put(path, "/tmp/%s"%filename, replication=1)
+            os.remove(path)
             return render_template('index.html', filename=filename)
-    return render_template('index.html')
+    return render_template('upload.html')
 
 
 @app.route('/uploads/<path:filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename, as_attachment=True)
+
+    with hdfs.open("/tmp/" + filename, replication=1) as music:
+        return music.read()
+    # return send_from_directory(app.config['UPLOAD_FOLDER'],
+    #                            filename, as_attachment=True)

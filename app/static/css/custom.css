@@ -10,13 +10,3 @@ margin-left: 350px;
 .page-header {
 text-align: center;
 }
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Open Sans', sans-serif;
-}
-@font-face {
-    font-family: 'Roboto', sans-serif;
-}
-.my-auto {
-    margin-top: auto;
-    margin-bottom: auto;
-}
