@@ -15,7 +15,6 @@ def index():
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
-    os.environ["HADOOP_CONF_DIR"] = "/home/vovnit/Soft/hadoop-3.1.0/etc/hadoop"
     if request.method == 'POST':
         file = request.files['file']
         if file.filename:
