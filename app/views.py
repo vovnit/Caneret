@@ -1,10 +1,11 @@
 import os
+from elasticsearch import Elasticsearch
 from flask import render_template, request, send_from_directory, send_file, make_response
 from hdfs3 import HDFileSystem
 from werkzeug.utils import secure_filename
 from app import app
 
-
+es = Elasticsearch({'host': 'localhost', 'port': 9200})
 hdfs = HDFileSystem('localhost', 9000)
 
 @app.route('/')
@@ -22,7 +23,7 @@ def upload_file():
             hdfs.touch("/tmp/%s"%filename)
             with hdfs.open("/tmp/%s"%filename, mode="wb") as f:
                 f.write(file.read())
-                
+
             return render_template('index.html', filename=filename)
     return render_template('upload.html')
 
