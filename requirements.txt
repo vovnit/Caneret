@@ -1,0 +1,4 @@
+elasticsearch < 6
+flask
+hdfs3
+werkzeug
