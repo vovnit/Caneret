@@ -1,4 +1,4 @@
 FLASK_APP=app.py
 FLASK_ENV=production
 FLASK_DEBUG=0
-python FLASK_APP
+python app.py
