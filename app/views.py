@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 from app import app
 
 es = Elasticsearch({'host': 'localhost', 'port': 9200})
-hdfs = HDFileSystem('localhost', 9000)
+hdfs = HDFileSystem('hdfs://localhost', 9000)
 
 @app.route('/')
 def index():
