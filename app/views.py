@@ -19,10 +19,10 @@ def upload_file():
         file = request.files['file']
         if file.filename:
             filename = secure_filename(file.filename)
-            path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(path)
-            hdfs.put(path, "/tmp/%s"%filename, replication=1)
-            os.remove(path)
+            hdfs.touch("/tmp/%s"%filename)
+            with hdfs.open("/tmp/%s"%filename, mode="wb") as f:
+                f.write(file.read())
+                
             return render_template('index.html', filename=filename)
     return render_template('upload.html')
 
